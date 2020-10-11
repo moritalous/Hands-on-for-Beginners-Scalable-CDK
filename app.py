@@ -6,6 +6,7 @@ from hands_on_for_beginners_scalable_cdk.hands_on_for_beginners_scalable_cdk_sta
 
 
 app = core.App()
-HandsOnForBeginnersScalableCdkStack(app, "hands-on-for-beginners-scalable-cdk")
+env_EU = core.Environment(region="eu-west-1")
+HandsOnForBeginnersScalableCdkStack(app, "hands-on-for-beginners-scalable-cdk", env=env_EU)
 
 app.synth()
