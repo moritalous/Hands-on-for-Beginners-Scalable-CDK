@@ -66,7 +66,7 @@ class HandsOnForBeginnersScalableCdkStack(core.Stack):
 
         # # EC2 Security Group
         ec2_security_group = ec2.SecurityGroup(self,"ec2-security-group",vpc=vpc)
-        ec2_security_group.add_ingress_rule(peer=ec2.Peer.any_ipv4(),connection=ec2.Port.tcp(80))
+        # ec2_security_group.add_ingress_rule(peer=ec2.Peer.any_ipv4(),connection=ec2.Port.tcp(80))
 
         # User Data
         user_data = ec2.UserData.for_linux()
@@ -163,3 +163,11 @@ class HandsOnForBeginnersScalableCdkStack(core.Stack):
             port=80)
 
         core.CfnOutput(self, "ALB DNS Name",value=alb_instance.load_balancer_dns_name)
+
+        # EC2 Security Group Ingress
+        ec2.CfnSecurityGroupIngress(self, "ec2-security-group-ingress", 
+            group_id=ec2_security_group.security_group_id,
+            ip_protocol="tcp", 
+            from_port=80,
+            to_port=80,
+            source_security_group_id=alb_security_group.security_group_id)
